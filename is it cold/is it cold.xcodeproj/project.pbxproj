@@ -15,6 +15,10 @@
 		F167A52127810B33000DC845 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F167A51F27810B33000DC845 /* Main.storyboard */; };
 		F167A52327810B34000DC845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F167A52227810B34000DC845 /* Assets.xcassets */; };
 		F167A52627810B34000DC845 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F167A52427810B34000DC845 /* LaunchScreen.storyboard */; };
+		F167A52D27810EDC000DC845 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52C27810EDC000DC845 /* Networking.swift */; };
+		F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52E27810EEA000DC845 /* URL and Key.swift */; };
+		F167A53127810EED000DC845 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53027810EED000DC845 /* Models.swift */; };
+		F167A53327810EF3000DC845 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53227810EF3000DC845 /* Units.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,10 @@
 		F167A52027810B33000DC845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F167A52227810B34000DC845 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F167A52527810B34000DC845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F167A52C27810EDC000DC845 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		F167A52E27810EEA000DC845 /* URL and Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL and Key.swift"; sourceTree = "<group>"; };
+		F167A53027810EED000DC845 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		F167A53227810EF3000DC845 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +72,10 @@
 				F167A51927810B33000DC845 /* Actions.sks */,
 				F167A51B27810B33000DC845 /* GameScene.swift */,
 				F167A51D27810B33000DC845 /* GameViewController.swift */,
+				F167A52C27810EDC000DC845 /* Networking.swift */,
+				F167A52E27810EEA000DC845 /* URL and Key.swift */,
+				F167A53027810EED000DC845 /* Models.swift */,
+				F167A53227810EF3000DC845 /* Units.swift */,
 				F167A51F27810B33000DC845 /* Main.storyboard */,
 				F167A52227810B34000DC845 /* Assets.xcassets */,
 				F167A52427810B34000DC845 /* LaunchScreen.storyboard */,
@@ -144,9 +156,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */,
 				F167A51C27810B33000DC845 /* GameScene.swift in Sources */,
 				F167A51E27810B33000DC845 /* GameViewController.swift in Sources */,
+				F167A53327810EF3000DC845 /* Units.swift in Sources */,
+				F167A53127810EED000DC845 /* Models.swift in Sources */,
 				F167A51627810B33000DC845 /* AppDelegate.swift in Sources */,
+				F167A52D27810EDC000DC845 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
