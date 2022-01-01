@@ -9,6 +9,9 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+let screen_width = UIScreen.main.bounds.width
+let screen_height = UIScreen.main.bounds.height
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
