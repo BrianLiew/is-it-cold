@@ -19,6 +19,7 @@
 		F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52E27810EEA000DC845 /* URL and Key.swift */; };
 		F167A53127810EED000DC845 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53027810EED000DC845 /* Models.swift */; };
 		F167A53327810EF3000DC845 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53227810EF3000DC845 /* Units.swift */; };
+		F167A53527810F6B000DC845 /* UIKitAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53427810F6B000DC845 /* UIKitAnimations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		F167A52E27810EEA000DC845 /* URL and Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL and Key.swift"; sourceTree = "<group>"; };
 		F167A53027810EED000DC845 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F167A53227810EF3000DC845 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		F167A53427810F6B000DC845 /* UIKitAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAnimations.swift; sourceTree = "<group>"; };
+		F167A5362781118E000DC845 /* is-it-cold-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "is-it-cold-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +70,12 @@
 		F167A51427810B33000DC845 /* is it cold */ = {
 			isa = PBXGroup;
 			children = (
+				F167A5362781118E000DC845 /* is-it-cold-Info.plist */,
 				F167A51527810B33000DC845 /* AppDelegate.swift */,
 				F167A51727810B33000DC845 /* GameScene.sks */,
 				F167A51927810B33000DC845 /* Actions.sks */,
 				F167A51B27810B33000DC845 /* GameScene.swift */,
+				F167A53427810F6B000DC845 /* UIKitAnimations.swift */,
 				F167A51D27810B33000DC845 /* GameViewController.swift */,
 				F167A52C27810EDC000DC845 /* Networking.swift */,
 				F167A52E27810EEA000DC845 /* URL and Key.swift */,
@@ -157,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */,
+				F167A53527810F6B000DC845 /* UIKitAnimations.swift in Sources */,
 				F167A51C27810B33000DC845 /* GameScene.swift in Sources */,
 				F167A51E27810B33000DC845 /* GameViewController.swift in Sources */,
 				F167A53327810EF3000DC845 /* Units.swift in Sources */,
@@ -313,6 +319,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BPK4BTV343;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "is-it-cold-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -341,6 +348,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BPK4BTV343;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "is-it-cold-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
