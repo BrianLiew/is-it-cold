@@ -53,26 +53,9 @@ class GameViewController: UIViewController {
 
         let network_instance = Networking()
         network_instance.make_request(completion_handler: request_completion_handler)
-        
-        /*
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
-         */
     }
     
+    // initiation of data-displaying elements. Called in viewDidLoad.
     func init_UI() {
         temp_label.layer.cornerRadius = 0.5
         temp_label.layer.masksToBounds = true
@@ -85,7 +68,7 @@ class GameViewController: UIViewController {
         temp_min_label.text = "0.00 °F"
         wind_title.text = "Wind"
         
-        city_label.textAlignment = .left
+        city_label.textAlignment = .center
         weather_description_label.textAlignment = .center
         temp_label.textAlignment = .center
         temp_title.textAlignment = .center
@@ -106,6 +89,7 @@ class GameViewController: UIViewController {
         wind_speed_label.font = big_font
         
         view.addSubview(scroll_view)
+        view.sendSubviewToBack(scroll_view)
         scroll_view.addSubview(background)
         scroll_view.addSubview(temperature_background)
         scroll_view.addSubview(wind_background)
@@ -118,10 +102,9 @@ class GameViewController: UIViewController {
         scroll_view.addSubview(wind_title)
         scroll_view.addSubview(wind_deg_label)
         scroll_view.addSubview(wind_speed_label)
-        
-        clear_sky(view: background)
     }
     
+    // updates data-displaying elements and background animations. Called in request_completion_handler.
     func update_UI(
         city_name: String,
         weather_description_string: String,
@@ -130,8 +113,10 @@ class GameViewController: UIViewController {
         temp_max_double: Double,
         temp_min_double: Double,
         wind_deg_int: Int,
-        wind_speed_double: Double
+        wind_speed_double: Double,
+        background_view: UIView
     ) -> Void {
+        // update data
         self.city_label.text = city_name + ", " + country_name
         self.weather_description_label.text = weather_description_string
         self.temp_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_double)) + "°F"
@@ -139,11 +124,31 @@ class GameViewController: UIViewController {
         self.temp_min_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_min_double)) + "°F"
         self.wind_deg_label.text = convert_deg_to_direction(input: wind_deg_int)
         self.wind_speed_label.text = String(format: "%.2f", wind_speed_double) + " mph"
+                
+        // update background animations
+        if let skanimation_view = self.view as! SKView? {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "GameScene") {
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFill
+                
+                // Present the scene
+                
+                skanimation_view.presentScene(scene)
+            }
+            
+            skanimation_view.ignoresSiblingOrder = true
+            
+            skanimation_view.showsFPS = true
+            skanimation_view.showsNodeCount = true
+        }
+        
+        // clear_sky(view: background)
     }
     
     // MARK: data function
     
-    // completion handler for make_request(). parser.
+    // completion handler for make_request(). Parser.
     func request_completion_handler(json: Data?) -> Void {
         if let json_unwrapped = json {
             DispatchQueue.main.async {
@@ -158,7 +163,8 @@ class GameViewController: UIViewController {
                         temp_max_double: weather_data_unwrapped.main.temp_max,
                         temp_min_double: weather_data_unwrapped.main.temp_min,
                         wind_deg_int: weather_data_unwrapped.wind.deg,
-                        wind_speed_double: weather_data_unwrapped.wind.speed
+                        wind_speed_double: weather_data_unwrapped.wind.speed,
+                        background_view: self.background
                     )
                 }
             }
