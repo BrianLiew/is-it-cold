@@ -12,10 +12,13 @@ import GameplayKit
 let screen_width = UIScreen.main.bounds.width
 let screen_height = UIScreen.main.bounds.height
 
-let big_font = UIFont(name: "Helvetica Neue", size: 24)
-let small_font = UIFont(name: "Helvetica Neue", size: 16)
+let title_font = UIFont(name: "Chalkduster", size: 36)
+let big_font = UIFont(name: "Chalkduster", size: 24)
+let small_font = UIFont(name: "Chalkduster", size: 16)
 
-class GameViewController: UIViewController {
+let off_white = UIColor(red: 1, green: 1, blue: 0.92, alpha: 1)
+
+class ViewController: UIViewController {
     
     // MARK: UI element declarations
     
@@ -25,19 +28,17 @@ class GameViewController: UIViewController {
     let background = UIView(frame: CGRect(x: 0, y: 0, width: screen_width, height: screen_height))
     let temperature_background = UIView(frame: CGRect(x: 0, y: screen_height / 2, width: screen_width, height: 175))
     let wind_background = UIView(frame: CGRect(x: 0, y: screen_height / 2 + 175, width: screen_width, height: 175))
-    // UILabel
+    // UILabels
     let city_label = UILabel(frame: CGRect(x: 0, y: screen_height / 4 - 150, width: screen_width, height: 100))
-    // DESCRIPTION
     let weather_description_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 4 - 25, width: 300, height: 50))
-    // TEMPERATURE
     let temp_title = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2, width: 300, height: 50))
     let temp_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 50, width: 200, height: 100))
     let temp_max_label = UILabel(frame: CGRect(x: screen_width / 2 + 50, y: screen_height / 2 + 50, width: 100, height: 50))
     let temp_min_label = UILabel(frame: CGRect(x: screen_width / 2 + 50, y: screen_height / 2 + 100, width: 100, height: 50))
-    // WIND
     let wind_title = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 175, width: 300, height: 50))
     let wind_deg_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 225, width: 150, height: 100))
     let wind_speed_label = UILabel(frame: CGRect(x: screen_width / 2, y: screen_height / 2 + 225, width: 150, height: 100))
+    let forecast_time_label = UILabel(frame: CGRect(x: 0, y: screen_height / 4 - 200, width: screen_width, height: 50))
     // let attribution = UILabel(frame: CGRect(x: 0, y: 0, width: screen_width, height: 10))
     
     // MARK: JSONDecoder declaration
@@ -50,6 +51,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         init_UI()
+        
+        // self.view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
 
         let network_instance = Networking()
         network_instance.make_request(completion_handler: request_completion_handler)
@@ -79,7 +82,7 @@ class GameViewController: UIViewController {
         wind_speed_label.textAlignment = .center
         
         city_label.font = big_font
-        weather_description_label.font = big_font
+        weather_description_label.font = title_font
         temp_label.font = big_font
         temp_title.font = big_font
         temp_max_label.font = small_font
@@ -87,7 +90,7 @@ class GameViewController: UIViewController {
         wind_title.font = big_font
         wind_deg_label.font = big_font
         wind_speed_label.font = big_font
-        
+                
         view.addSubview(scroll_view)
         view.sendSubviewToBack(scroll_view)
         scroll_view.addSubview(background)
@@ -124,26 +127,70 @@ class GameViewController: UIViewController {
         self.temp_min_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_min_double)) + "°F"
         self.wind_deg_label.text = convert_deg_to_direction(input: wind_deg_int)
         self.wind_speed_label.text = String(format: "%.2f", wind_speed_double) + " mph"
-                
+        
+        self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
         // update background animations
-        if let skanimation_view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                
-                skanimation_view.presentScene(scene)
+        if let view = self.view as! SKView? {
+            
+            switch (weather_description_string) {
+            case "Clear Sky":
+                clear_sky(view: background_view)
+            case "Few Clouds":
+                few_clouds(view: background_view)
+            case "Broken Clouds":
+                few_clouds(view: background_view)
+            case "Shower Rain":
+                if let scene = SKScene(fileNamed: "ShowerRain") {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFill
+                    // Present the scene
+                    convert_text_to_white()
+                    view.presentScene(scene)
+                }
+            case "Rain":
+                if let scene = SKScene(fileNamed: "Rain") {
+                    scene.scaleMode = .aspectFill
+                    convert_text_to_white()
+                    view.presentScene(scene)
+                }
+            case "Thunderstorm":
+                if let scene = SKScene(fileNamed: "Rain") {
+                    scene.scaleMode = .aspectFill
+                    convert_text_to_white()
+                    view.presentScene(scene)
+                }
+            case "Snow":
+                if let scene = SKScene(fileNamed: "Snow") {
+                    scene.scaleMode = .aspectFill
+                    convert_text_to_white()
+                    view.presentScene(scene)
+                }
+            case "Mist":
+                if let scene = SKScene(fileNamed: "Snow") {
+                    scene.scaleMode = .aspectFill
+                    convert_text_to_white()
+                    view.presentScene(scene)
+                }
+            default: print("default")
             }
             
-            skanimation_view.ignoresSiblingOrder = true
+            view.ignoresSiblingOrder = true
             
-            skanimation_view.showsFPS = true
-            skanimation_view.showsNodeCount = true
+            view.showsFPS = true
+            view.showsNodeCount = true
         }
-        
-        // clear_sky(view: background)
+    }
+    
+    func convert_text_to_white() -> Void {
+        city_label.textColor = off_white
+        weather_description_label.textColor = off_white
+        temp_label.textColor = off_white
+        temp_title.textColor = off_white
+        temp_max_label.textColor = off_white
+        temp_min_label.textColor = off_white
+        wind_title.textColor = off_white
+        wind_deg_label.textColor = off_white
+        wind_speed_label.textColor = off_white
     }
     
     // MARK: data function
@@ -153,8 +200,9 @@ class GameViewController: UIViewController {
         if let json_unwrapped = json {
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
-                if let weather_data_unwrapped = weather_data {
+                if var weather_data_unwrapped = weather_data {
                     print(weather_data_unwrapped)
+                    weather_data_unwrapped.set_description(description: "rain")
                     self.update_UI(
                         city_name: weather_data_unwrapped.name,
                         weather_description_string: weather_data_unwrapped.return_description().capitalized,
