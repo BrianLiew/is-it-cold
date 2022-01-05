@@ -14,7 +14,7 @@ class Networking {
         let session = URLSession(configuration: configuration)
         
         DispatchQueue.global().async {
-            let task = session.dataTask(with: forecast_url!) { data, response, error in
+            let task = session.dataTask(with: current_url!) { data, response, error in
                 
                 guard let http_response = response as? HTTPURLResponse,
                       (200...299).contains(http_response.statusCode) else {

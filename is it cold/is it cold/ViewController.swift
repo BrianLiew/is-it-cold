@@ -202,7 +202,7 @@ class ViewController: UIViewController {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
                 if var weather_data_unwrapped = weather_data {
                     print(weather_data_unwrapped)
-                    weather_data_unwrapped.set_description(description: "rain")
+                    weather_data_unwrapped.set_description(description: "snow")
                     self.update_UI(
                         city_name: weather_data_unwrapped.name,
                         weather_description_string: weather_data_unwrapped.return_description().capitalized,

@@ -7,7 +7,6 @@
 
 import SpriteKit
 import GameplayKit
-import UIKit
 
 class Rain: SKScene {
     
