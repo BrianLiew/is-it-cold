@@ -7,13 +7,14 @@
 
 import Foundation
 
+// MARK: CURRENT WEATHER data or current_url only
+/*
 struct weather_data: Codable {
     var name: String
     var main: main
     var sys: sys
     var wind: wind
     var weather: [Weather]
-    // var list: [List]
     
     func return_description() -> String { return weather[0].description }
     func return_icon() -> String { return weather[0].icon }
@@ -22,7 +23,6 @@ struct weather_data: Codable {
     mutating func set_description(description: String) -> Void { weather[0].description = description }
 }
 
-// MARK: openweather.org CURRENT WEATHER DATA & HOURLY FORECAST
 struct main: Codable {
     var temp: Double
     var temp_max: Double
@@ -39,12 +39,36 @@ struct Weather: Codable {
     var icon: String
 }
 
-// MARK: openweather.org CURRENT WEATHER DATA only
 struct sys: Codable {
     var country: String
 }
+ */
 
-// MARK: openweather.org HOURLY FORECAST only
-struct List: Codable {
+// MARK: ONE CALL WEATHER data or one_url only
+struct weather_data: Codable {
+    var current: current
+    var hourly: [Hourly]
     
+    func return_description() -> String { return current.weather[0].description }
+    // for debug use only
+    mutating func set_description(description: String) -> Void { current.weather[0].description = description }
+}
+
+struct current: Codable {
+    var temp: Double
+    var weather: [Weather]
+}
+
+struct Hourly: Codable {
+    var dt: Double
+    var temp: Double
+    var wind_speed: Double
+    var weather: [Weather]
+}
+
+struct Weather: Codable {
+    var description: String
+    var icon: String
+    
+    func return_icon() -> String { return icon }
 }
