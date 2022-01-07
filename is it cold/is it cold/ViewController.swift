@@ -44,31 +44,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let hourly_table_view = UITableView(frame: CGRect(x: 50, y: screen_height / 2, width: screen_width - 100, height: 300))
     
     // MARK: data variable declarations
-    var hourly_data: [Hourly] = [
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []),
-        Hourly(dt: 0, temp: 0, wind_speed: 0, weather: [])
-    ]
+    var hourly_data: [Hourly] = Array(repeating: Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []), count: 24)
+    var hourly_images: [UIImage] = Array(repeating: UIImage(), count: 24)
     
     // MARK: - JSONDecoder declaration
     
@@ -98,8 +75,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // temp_min_label.text = "0.00 °F"
         // wind_title.text = "Wind"
         
-        // MARK: text alignment
-        // current weather
         city_label.textAlignment = .center
         weather_description_label.textAlignment = .center
         temp_label.textAlignment = .center
@@ -112,7 +87,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         wind_speed_label.textAlignment = .center
          */
         
-        // current call
         city_label.font = big_font
         weather_description_label.font = title_font
         temp_label.font = big_font
@@ -129,6 +103,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         hourly_table_view.dataSource = self
         hourly_table_view.delegate = self
         hourly_table_view.layer.cornerRadius = 10
+        hourly_table_view.showsVerticalScrollIndicator = false
                 
         view.addSubview(scroll_view)
         view.sendSubviewToBack(scroll_view)
@@ -150,34 +125,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         scroll_view.addSubview(hourly_table_view)
     }
     
-    // updates data-displaying elements and background animations. Called in request_completion_handler. CURRENT WEATHER only.
-    /*
-    func update_UI(
-        city_name: String,
-        weather_description_string: String,
-        country_name: String,
-        temp_double: Double,
-        temp_max_double: Double,
-        temp_min_double: Double,
-        wind_deg_int: Int,
-        wind_speed_double: Double,
-        background_view: UIView
-    ) -> Void {
-        // update data
-        self.city_label.text = city_name + ", " + country_name
-        self.weather_description_label.text = weather_description_string
-        self.temp_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_double)) + "°F"
-        self.temp_max_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_max_double)) + "°F"
-        self.temp_min_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temp_min_double)) + "°F"
-        self.wind_deg_label.text = convert_deg_to_direction(input: wind_deg_int)
-        self.wind_speed_label.text = String(format: "%.2f", wind_speed_double) + " mph"
-        
-        self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
-        
-        update_animation(description: weather_description_string, background_view: background_view)
-    }
-     */
-    
     // updates data-displaying elements and background animations. Called in request_completion_handler. ONE CALL only.
     func update_UI(
         city_name: String,
@@ -194,10 +141,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         // update hourly weather data
         for index in 0...22 { hourly_data[index] = hourly_stats[index] }
-        hourly_table_view.reloadData()
         
-        print(hourly_data[0].weather[0].icon)
-
+        hourly_table_view.reloadData()
         
         self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
 
@@ -255,7 +200,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func cache_images() -> Void { }
+    // MARK: ViewController utility functions
+    
+    func cache_images(data: weather_data) -> Void { for index in 0...23 { hourly_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.return_image_string(index: index))@2x.png")!))! } }
+    
+    func time_formatter(current_time: Double) -> String {
+        let time = Date(timeIntervalSince1970: current_time)
+
+        let format = DateFormatter()
+        format.timeZone = .current
+        format.dateFormat = "hh:mm a"
+        let time_string = format.string(from: time)
+        
+        return time_string
+    }
     
     func convert_text_to_white() -> Void {
         // current weather UI elements
@@ -273,34 +231,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // MARK: - data fetching functions
-    
-    // completion handler for make_request() for CURRENT WEATHER. Parser.
-    /*
+
+    // completion handler for make_request() for ONE CALL. Parses data.
     func request_completion_handler(json: Data?) -> Void {
         if let json_unwrapped = json {
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
                 if var weather_data_unwrapped = weather_data {
-                    print(weather_data_unwrapped)
+                    print("weather data unwrapped", weather_data_unwrapped.current.weather.description)
                     weather_data_unwrapped.set_description(description: "snow")
                     self.update_UI(
-                        city_name: weather_data_unwrapped.name,
+                        city_name: "Chicago",
+                        country_name: "USA",
+                        temperature: weather_data_unwrapped.current.temp,
                         weather_description_string: weather_data_unwrapped.return_description().capitalized,
-                        country_name: weather_data_unwrapped.sys.country,
-                        temp_double: weather_data_unwrapped.main.temp,
-                        temp_max_double: weather_data_unwrapped.main.temp_max,
-                        temp_min_double: weather_data_unwrapped.main.temp_min,
-                        wind_deg_int: weather_data_unwrapped.wind.deg,
-                        wind_speed_double: weather_data_unwrapped.wind.speed,
+                        hourly_stats: weather_data_unwrapped.hourly,
                         background_view: self.background
                     )
+                    self.cache_images(data: weather_data_unwrapped)
                 }
             }
         } else { print("json unwrap error") }
     }
-    */
     
-    // MARK: table view data source
+    // MARK: table view data source & delegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -314,37 +268,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         var content = cell.defaultContentConfiguration()
         
-        content.text = "\(hourly_data[indexPath.row].dt)"
-        // content.image = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(hourly_data[indexPath.row].return_icon())@2x.png")!))!
+        // deprecated
         //cell.textLabel!.text = "\(hourly_data[indexPath.row].dt)"
+        
+        content.text = "\(time_formatter(current_time: hourly_data[indexPath.row].dt))"
+        content.image = hourly_images[indexPath.row]
+        content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
         
         cell.contentConfiguration = content
         
         return cell
     }
     
-    // MARK: table view delegate
-    
-    // completion handler for make_request() for ONE CALL. Parser.
-    func request_completion_handler(json: Data?) -> Void {
-        if let json_unwrapped = json {
-            DispatchQueue.main.async {
-                let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
-                if var weather_data_unwrapped = weather_data {
-                    print("weather data unwrapped", weather_data_unwrapped.current.weather.description)
-                    weather_data_unwrapped.set_description(description: "clear sky")
-                    self.update_UI(
-                        city_name: "Chicago",
-                        country_name: "USA",
-                        temperature: weather_data_unwrapped.current.temp,
-                        weather_description_string: weather_data_unwrapped.return_description().capitalized,
-                        hourly_stats: weather_data_unwrapped.hourly,
-                        background_view: self.background
-                    )
-                }
-            }
-        } else { print("json unwrap error") }
-    }
+    // MARK: - SpriteKit default functions
 
     override var shouldAutorotate: Bool {
         return false

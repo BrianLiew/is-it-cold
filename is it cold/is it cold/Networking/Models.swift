@@ -50,6 +50,7 @@ struct weather_data: Codable {
     var hourly: [Hourly]
     
     func return_description() -> String { return current.weather[0].description }
+    func return_image_string(index: Int) -> String { return hourly[index].weather[0].icon }
     // for debug use only
     mutating func set_description(description: String) -> Void { current.weather[0].description = description }
 }
@@ -69,6 +70,4 @@ struct Hourly: Codable {
 struct Weather: Codable {
     var description: String
     var icon: String
-    
-    func return_icon() -> String { return icon }
 }
