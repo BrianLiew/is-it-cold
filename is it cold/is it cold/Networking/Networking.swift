@@ -6,10 +6,16 @@
 //
 
 import Foundation
+import CoreLocation
 
-class Networking {
+class Networking: CLLocationManager, CLLocationManagerDelegate {
+    
+    let location_manager = CLLocationManager()
     
     func make_request(completion_handler: @escaping (Data?) -> Void) {
+        location_manager.delegate = self
+        location_manager.requestLocation()
+        
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
         
@@ -33,6 +39,28 @@ class Networking {
             }
             task.resume()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+        if let location = locations.last {
+            print(location)
+            instance.set_latitude(value: location.coordinate.latitude)
+            instance.set_longitude(value: location.coordinate.longitude)
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(
+        _ manager: CLLocationManager,
+        didFailWithError error: Error
+    ) {
+        // Handle failure to get a user’s location
     }
     
 }

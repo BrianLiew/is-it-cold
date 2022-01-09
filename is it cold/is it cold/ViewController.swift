@@ -20,42 +20,53 @@ let off_white = UIColor(red: 1, green: 1, blue: 0.92, alpha: 1)
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let instance = AllData.instance
+    
     // MARK: - UI element declarations
     
     // MARK: current weather UI elements
     let scroll_view = UIScrollView(frame: CGRect(x: 0, y: 0, width: screen_width, height: screen_height))
+    let forecast_scrollview = UIScrollView(frame: CGRect(x: 0, y: screen_height / 2, width: screen_width, height: 350))
+    let forecast_stackview = UIStackView(frame: CGRect(x: 0, y: screen_height, width: screen_width, height: 350))
+
     let background = UIView(frame: CGRect(x: 0, y: 0, width: screen_width, height: screen_height))
     // let temperature_background = UIView(frame: CGRect(x: 0, y: screen_height / 2, width: screen_width, height: 175))
     // let wind_background = UIView(frame: CGRect(x: 0, y: screen_height / 2 + 175, width: screen_width, height: 175))
     let city_label = UILabel(frame: CGRect(x: 0, y: screen_height / 4 - 150, width: screen_width, height: 100))
+    
     let weather_description_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 4 - 25, width: 300, height: 50))
-    let temp_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 4 + 50, width: 300, height: 50))
-    /*
+    let temp_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 4 + 50, width: 300, height: 50)) /*
     let temp_title = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2, width: 300, height: 50))
     let temp_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 50, width: 200, height: 100))
     let temp_max_label = UILabel(frame: CGRect(x: screen_width / 2 + 50, y: screen_height / 2 + 50, width: 100, height: 50))
     let temp_min_label = UILabel(frame: CGRect(x: screen_width / 2 + 50, y: screen_height / 2 + 100, width: 100, height: 50))
     let wind_title = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 175, width: 300, height: 50))
     let wind_deg_label = UILabel(frame: CGRect(x: screen_width / 2 - 150, y: screen_height / 2 + 225, width: 150, height: 100))
-    let wind_speed_label = UILabel(frame: CGRect(x: screen_width / 2, y: screen_height / 2 + 225, width: 150, height: 100))
-     */
+    let wind_speed_label = UILabel(frame: CGRect(x: screen_width / 2, y: screen_height / 2 + 225, width: 150, height: 100)) */
+    
     // MARK: one call UI elements
-    // let forecast_time_label = UILabel(frame: CGRect(x: 0, y: screen_height / 4 - 200, width: screen_width, height: 50))
     let hourly_table_view = UITableView(frame: CGRect(x: 50, y: screen_height / 2, width: screen_width - 100, height: 300))
+    let daily_table_view = UITableView(frame: CGRect(x: 50, y: screen_height / 2 + 350, width: screen_width - 100, height: 300))
     
     // MARK: data variable declarations
     var hourly_data: [Hourly] = Array(repeating: Hourly(dt: 0, temp: 0, wind_speed: 0, weather: []), count: 24)
+    var daily_data: [Daily] = Array(repeating: Daily(dt: 0, temp: nil, weather: []), count: 7)
     var hourly_images: [UIImage] = Array(repeating: UIImage(), count: 24)
-    
+    var daily_images: [UIImage] = Array(repeating: UIImage(), count: 7)
+        
     // MARK: - JSONDecoder declaration
     
     let decoder = JSONDecoder()
     
     // MARK: - ViewController functions
+    
+    let location_manager = LocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // print(location_manager.return_last_known_location())
+                
         init_UI()
         
         let network_instance = Networking()
@@ -69,60 +80,45 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         city_label.text = "-"
         weather_description_label.text = "-"
-        // temp_title.text = "Temperature"
         temp_label.text = "0.00 °F"
-        // temp_max_label.text = "0.00 °F"
-        // temp_min_label.text = "0.00 °F"
-        // wind_title.text = "Wind"
-        
+
         city_label.textAlignment = .center
         weather_description_label.textAlignment = .center
         temp_label.textAlignment = .center
-        /*
-        temp_title.textAlignment = .center
-        temp_max_label.textAlignment = .center
-        temp_min_label.textAlignment = .center
-        wind_title.textAlignment = .center
-        wind_deg_label.textAlignment = .center
-        wind_speed_label.textAlignment = .center
-         */
         
         city_label.font = big_font
         weather_description_label.font = title_font
         temp_label.font = big_font
-        /*
-        temp_title.font = big_font
-        temp_max_label.font = small_font
-        temp_min_label.font = small_font
-        wind_title.font = big_font
-        wind_deg_label.font = big_font
-        wind_speed_label.font = big_font
-        */
         
         hourly_table_view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         hourly_table_view.dataSource = self
         hourly_table_view.delegate = self
         hourly_table_view.layer.cornerRadius = 10
         hourly_table_view.showsVerticalScrollIndicator = false
+        
+        daily_table_view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        daily_table_view.dataSource = self
+        daily_table_view.delegate = self
+        daily_table_view.layer.cornerRadius = 10
+        daily_table_view.showsVerticalScrollIndicator = false
                 
         view.addSubview(scroll_view)
+        
+        scroll_view.contentSize = CGSize(width: screen_width, height: screen_height + 500)
+        
         view.sendSubviewToBack(scroll_view)
         scroll_view.addSubview(background)
-        // scroll_view.addSubview(temperature_background)
-        // scroll_view.addSubview(wind_background)
         scroll_view.addSubview(city_label)
         scroll_view.addSubview(weather_description_label)
         scroll_view.addSubview(temp_label)
-        /*
-        scroll_view.addSubview(temp_label)
-        scroll_view.addSubview(temp_title)
-        scroll_view.addSubview(temp_max_label)
-        scroll_view.addSubview(temp_min_label)
-        scroll_view.addSubview(wind_title)
-        scroll_view.addSubview(wind_deg_label)
-        scroll_view.addSubview(wind_speed_label)
-        */
+        
         scroll_view.addSubview(hourly_table_view)
+        scroll_view.addSubview(daily_table_view)
+        
+        scroll_view.translatesAutoresizingMaskIntoConstraints = false
+        forecast_scrollview.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
     }
     
     // updates data-displaying elements and background animations. Called in request_completion_handler. ONE CALL only.
@@ -138,13 +134,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.city_label.text = city_name + ", " + country_name
         self.temp_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temperature)) + "°F"
         self.weather_description_label.text = weather_description_string
-                
-        // update hourly weather data
-        for index in 0...22 { hourly_data[index] = hourly_stats[index] }
-        
+                        
         hourly_table_view.reloadData()
-        
-        self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
+        daily_table_view.reloadData()
 
         init_animation(description: weather_description_string, background_view: background_view)
     }
@@ -202,7 +194,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: ViewController utility functions
     
-    func cache_images(data: weather_data) -> Void { for index in 0...23 { hourly_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.return_image_string(index: index))@2x.png")!))! } }
+    func update_data(data: weather_data) -> Void {
+        for index in 0...23 { self.hourly_data[index] = data.hourly[index] }
+        for index in 0...6 { self.daily_data[index] = data.daily[index] }
+    }
+    
+    func cache_images(data: weather_data) -> Void {
+        for index in 0...23 { hourly_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.return_hourly_images(index: index))@2x.png")!))! }
+        for index in 0...6 { daily_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.return_daily_images(index: index))@2x.png")!))! }
+    }
     
     func time_formatter(current_time: Double) -> String {
         let time = Date(timeIntervalSince1970: current_time)
@@ -215,6 +215,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return time_string
     }
     
+    func date_formatter(current_time: Double) -> String {
+        let date = Date(timeIntervalSince1970: current_time)
+
+        let format = DateFormatter()
+        format.timeZone = .current
+        format.dateFormat = "MMM DD  E"
+        let date_string = format.string(from: date)
+        
+        return date_string
+    }
+        
     func convert_text_to_white() -> Void {
         // current weather UI elements
         city_label.textColor = off_white
@@ -238,8 +249,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
                 if var weather_data_unwrapped = weather_data {
-                    print("weather data unwrapped", weather_data_unwrapped.current.weather.description)
-                    weather_data_unwrapped.set_description(description: "snow")
+                    weather_data_unwrapped.set_description(description: "snow") // animation debugging purposes only
+                    self.update_data(data: weather_data_unwrapped)
+                    self.cache_images(data: weather_data_unwrapped) // fix: long loading times
                     self.update_UI(
                         city_name: "Chicago",
                         country_name: "USA",
@@ -248,7 +260,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         hourly_stats: weather_data_unwrapped.hourly,
                         background_view: self.background
                     )
-                    self.cache_images(data: weather_data_unwrapped)
                 }
             }
         } else { print("json unwrap error") }
@@ -260,22 +271,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 23
+        if (tableView == self.daily_table_view) { return 7 }
+        else { return 24 }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath)
-        
-        var content = cell.defaultContentConfiguration()
-        
-        // deprecated
-        //cell.textLabel!.text = "\(hourly_data[indexPath.row].dt)"
-        
-        content.text = "\(time_formatter(current_time: hourly_data[indexPath.row].dt))"
-        content.image = hourly_images[indexPath.row]
-        content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
-        
-        cell.contentConfiguration = content
+
+        if (tableView == self.hourly_table_view) {
+            var content = cell.defaultContentConfiguration()
+            
+            content.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: hourly_data[indexPath.row].temp)) + "°F   " + "\(time_formatter(current_time: Double(hourly_data[indexPath.row].dt)))"
+            content.textProperties.font = small_font!
+            content.image = hourly_images[indexPath.row]
+            content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
+            
+            cell.contentConfiguration = content
+        }
+        else if (tableView == self.daily_table_view) {
+            var content = cell.defaultContentConfiguration()
+            
+            content.text = "\(date_formatter(current_time: Double(daily_data[indexPath.row].dt)))"
+            content.textProperties.font = small_font!
+
+            content.image = hourly_images[indexPath.row]
+            content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
+            
+            cell.contentConfiguration = content
+        }
         
         return cell
     }
