@@ -50,10 +50,6 @@ struct weather_data: Codable {
     var hourly: [Hourly]
     var daily: [Daily]
     
-    func return_description() -> String { return current.weather[0].description }
-    func return_hourly_images(index: Int) -> String { return hourly[index].weather[0].icon }
-    func return_daily_images(index: Int) -> String { return daily[index].weather[0].icon }
-    func return_daily_description(index: Int) -> String { return daily[index].weather[0].description }
     // for debug use only
     mutating func set_description(description: String) -> Void { current.weather[0].description = description }
 }
@@ -67,12 +63,13 @@ struct Hourly: Codable {
     var dt: Int
     var temp: Double
     var wind_speed: Double
+    var wind_deg: Int
     var weather: [Weather]
 }
 
 struct Daily: Codable {
     var dt: Int
-    var temp: temp?
+    var temp: temp
     var weather: [Weather]
 }
 
@@ -82,6 +79,7 @@ struct temp: Codable {
 }
 
 struct Weather: Codable {
+    var main: String
     var description: String
     var icon: String
 }

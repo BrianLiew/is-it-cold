@@ -12,13 +12,13 @@ func convert_kelvin_to_fahrenheit(input: Double) -> Double { return ((input - 27
 func convert_deg_to_direction(input: Int) -> String {
     switch input {
     case 0...89:
-        return (String(format: "%d", input) + "° N")
+        return (String(format: "%d", input) + "°N")
     case 90...179:
-        return (String(format: "%d", input - 90) + "° E")
+        return (String(format: "%d", input - 90) + "°E")
     case 180...269:
-        return (String(format: "%d", input - 180) + "° S")
+        return (String(format: "%d", input - 180) + "°S")
     case 270...359:
-        return (String(format: "%d", input - 270) + "° W")
+        return (String(format: "%d", input - 270) + "°W")
     default:
         return String(format: "%d", input)
     }

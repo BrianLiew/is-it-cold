@@ -8,19 +8,27 @@
 import Foundation
 import CoreLocation
 
-class Networking: CLLocationManager, CLLocationManagerDelegate {
+class Networking {
     
-    let location_manager = CLLocationManager()
+    private let key: String = "865e25bdadd4ab58522a489eed0685de"
+
+    var latitude: Double
+    var longitude: Double
+    var url: URL
     
-    func make_request(completion_handler: @escaping (Data?) -> Void) {
-        location_manager.delegate = self
-        location_manager.requestLocation()
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
         
+        url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=\(longitude)&exclude=minutely,alerts&appid=\(key)")!
+    }
+        
+    func make_request(completion_handler: @escaping (Data?) -> Void) {        
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
         
         DispatchQueue.global().async {
-            let task = session.dataTask(with: one_url!) { data, response, error in
+            let task = session.dataTask(with: self.url) { data, response, error in
                 
                 guard let http_response = response as? HTTPURLResponse,
                       (200...299).contains(http_response.statusCode) else {
@@ -39,28 +47,6 @@ class Networking: CLLocationManager, CLLocationManagerDelegate {
             }
             task.resume()
         }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
-        if let location = locations.last {
-            print(location)
-            instance.set_latitude(value: location.coordinate.latitude)
-            instance.set_longitude(value: location.coordinate.longitude)
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            manager.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(
-        _ manager: CLLocationManager,
-        didFailWithError error: Error
-    ) {
-        // Handle failure to get a user’s location
     }
     
 }
