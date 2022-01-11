@@ -15,7 +15,6 @@
 		F13BFBC12784CCBE004D6C72 /* Mist.sks in Resources */ = {isa = PBXBuildFile; fileRef = F13BFBC02784CCBE004D6C72 /* Mist.sks */; };
 		F13BFBC32784CDBE004D6C72 /* ShowerRain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BFBC22784CDBE004D6C72 /* ShowerRain.swift */; };
 		F13BFBC52784CDC5004D6C72 /* ShowerRain.sks in Resources */ = {isa = PBXBuildFile; fileRef = F13BFBC42784CDC5004D6C72 /* ShowerRain.sks */; };
-		F13BFBF3278A4FCB004D6C72 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BFBF2278A4FCB004D6C72 /* Icons.swift */; };
 		F167A51627810B33000DC845 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A51527810B33000DC845 /* AppDelegate.swift */; };
 		F167A51827810B33000DC845 /* Rain.sks in Resources */ = {isa = PBXBuildFile; fileRef = F167A51727810B33000DC845 /* Rain.sks */; };
 		F167A51A27810B33000DC845 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = F167A51927810B33000DC845 /* Actions.sks */; };
@@ -40,7 +39,6 @@
 		F13BFBC02784CCBE004D6C72 /* Mist.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Mist.sks; sourceTree = "<group>"; };
 		F13BFBC22784CDBE004D6C72 /* ShowerRain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowerRain.swift; sourceTree = "<group>"; };
 		F13BFBC42784CDC5004D6C72 /* ShowerRain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShowerRain.sks; sourceTree = "<group>"; };
-		F13BFBF2278A4FCB004D6C72 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		F167A51227810B33000DC845 /* is it cold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "is it cold.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F167A51527810B33000DC845 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F167A51727810B33000DC845 /* Rain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Rain.sks; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				F13BFBB7278442C6004D6C72 /* Snow.sks */,
 				F13BFBB52784429E004D6C72 /* Snow.swift */,
 				F167A53427810F6B000DC845 /* UIKitAnimations.swift */,
-				F13BFBF2278A4FCB004D6C72 /* Icons.swift */,
 				F167A51D27810B33000DC845 /* ViewController.swift */,
 				F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */,
 				F13BFBBC2784CCA2004D6C72 /* Mist.swift */,
@@ -200,7 +197,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F13BFBF3278A4FCB004D6C72 /* Icons.swift in Sources */,
 				F13BFBBD2784CCA2004D6C72 /* Mist.swift in Sources */,
 				F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */,
 				F167A53527810F6B000DC845 /* UIKitAnimations.swift in Sources */,

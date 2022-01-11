@@ -41,7 +41,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let daily_table_view = UITableView(frame: CGRect(x: 25, y: 750, width: screen_width - 50, height: 300))
     
     // MARK: - data structure declarations
-    
+    // MARK: Variables
+    var city: String = ""
+    var country: String = ""
     // MARK: Array
     var hourly_data: [Hourly] = Array(repeating: Hourly(dt: 0, temp: 0, wind_speed: 0, wind_deg: 0, weather: [Weather(main: "", description: "", icon: "")]), count: 24)
     var daily_data: [Daily] = Array(repeating: Daily(dt: 0, temp: temp(min: 0, max: 0), weather: [Weather(main: "", description: "", icon: "")]), count: 7)
@@ -103,8 +105,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         init_UI()
-        // init_location_manager()
         
+        // init_location_manager()
         // let network_instance = Networking(latitude: 40.76, longitude: -73.78)
         // network_instance.make_request(completion_handler: request_completion_handler)
     }
@@ -114,29 +116,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         location_manager.desiredAccuracy = kCLLocationAccuracyBest
         location_manager.requestLocation()
     }
-    
-    /*
-    func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
-            if error != nil {
-                print(error)
-                return
-            }
-            else if placemarks?.count > 0 {
-                let pm = placemarks![0]
-                let address = ABCreateStringWithAddressDictionary(pm.addressDictionary!, false)
-                print("\n\(address)")
-                if pm.areasOfInterest?.count > 0 {
-                    let areaOfInterest = pm.areasOfInterest?[0]
-                    print(areaOfInterest!)
-                } else {
-                    print("No area of interest found.")
-                }
-            }
-        })
-    }
-     */
     
     // initiation of data-displaying elements. Called in viewDidLoad.
     func init_UI() -> Void {
@@ -339,10 +318,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     // weather_data_unwrapped.set_description(description: "snow") // animation debugging purposes only
                     self.update_data(data: weather_data_unwrapped)
                     self.cache_images(data: weather_data_unwrapped) // fix: long loading times
-                    print(weather_data_unwrapped.current.weather[0].main)
                     self.update_UI(
-                        city_name: "Chicago",
-                        country_name: "USA",
+                        city_name: self.city,
+                        country_name: self.country,
                         weather_description_string: weather_data_unwrapped.current.weather[0].description.capitalized,
                         weather_group: weather_data_unwrapped.current.weather[0].main.capitalized,
                         temperature: weather_data_unwrapped.current.temp,
@@ -401,16 +379,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            let lat = location.coordinate.latitude
-            let lon = location.coordinate.longitude
-            
-            print(location)
-                        
-            let network_instance = Networking(latitude: lat, longitude: lon)
-            network_instance.make_request(completion_handler: request_completion_handler)
+            // update location label
+            location.fetchCityAndCountry { city, country, error in
+                guard let city = city, let country = country, error == nil else { return }
+                self.city = city
+                self.country = country
+            }
+            // initiate API call
+            Networking.set_location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            Networking.make_request(completion_handler: request_completion_handler)
         }
-        // let network_instance = Networking()
-        // network_instance.make_request(completion_handler: request_completion_handler)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -433,6 +411,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+}
+
+extension CLLocation {
+    
+    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
     }
     
 }
