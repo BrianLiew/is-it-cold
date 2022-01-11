@@ -360,6 +360,8 @@
 				DEVELOPMENT_TEAM = BPK4BTV343;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "is-it-cold-Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Because I always want to know where you are";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Because I need to know where you are";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -389,6 +391,8 @@
 				DEVELOPMENT_TEAM = BPK4BTV343;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "is-it-cold-Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Because I always want to know where you are";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Because I need to know where you are";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
