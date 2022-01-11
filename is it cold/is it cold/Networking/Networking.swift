@@ -11,7 +11,7 @@ import CoreLocation
 class Networking {
     
     private static let key: String = "865e25bdadd4ab58522a489eed0685de"
-    private static var url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=\(longitude)&exclude=minutely,alerts&appid=\(key)")!
+    private static var url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=\(longitude)&exclude=minutely&appid=\(key)")!
     
     static var latitude: Double = 00.00
     static var longitude: Double = 00.00

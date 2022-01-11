@@ -36,9 +36,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let weather_description_label = UILabel(frame: CGRect(x: 25, y: 100, width: screen_width - 50, height: 100))
     let temp_label = UILabel(frame: CGRect(x: 25, y: 200, width: screen_width / 3 - 25, height: 100))
     let wind_label = UILabel(frame: CGRect(x: screen_width / 3, y: 200, width: screen_width * 2 / 3 - 25, height: 100))
+    let alerts_label = UILabel(frame: CGRect(x: 25, y: 300, width: screen_width - 50, height: 200))
     // MARK: UITableView
-    let hourly_table_view = UITableView(frame: CGRect(x: 25, y: 400, width: screen_width - 50, height: 300))
-    let daily_table_view = UITableView(frame: CGRect(x: 25, y: 750, width: screen_width - 50, height: 300))
+    let hourly_table_view = UITableView(frame: CGRect(x: 25, y: 525, width: screen_width - 50, height: 300))
+    let daily_table_view = UITableView(frame: CGRect(x: 25, y: 850, width: screen_width - 50, height: 300))
     
     // MARK: - data structure declarations
     // MARK: Variables
@@ -109,6 +110,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // init_location_manager()
         // let network_instance = Networking(latitude: 40.76, longitude: -73.78)
         // network_instance.make_request(completion_handler: request_completion_handler)
+        Networking.set_location(latitude: 40.76, longitude: -73.78)
+        Networking.make_request(completion_handler: request_completion_handler)
     }
     
     func init_location_manager() {
@@ -123,16 +126,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         weather_description_label.text = "-"
         temp_label.text = "00.0 °F"
         wind_label.text = "00.0mph 000°N"
+        alerts_label.text = "No Alerts"
 
         city_label.textAlignment = .center
         weather_description_label.textAlignment = .center
         temp_label.textAlignment = .center
         wind_label.textAlignment = .center
+        alerts_label.textAlignment = .center
         
         city_label.font = regular_font
         weather_description_label.font = title_font
         temp_label.font = regular_font
         wind_label.font = regular_font
+        alerts_label.font = regular_font
+        
+        alerts_label.textColor = UIColor.black
+        alerts_label.backgroundColor = white
+        alerts_label.layer.cornerRadius = 10
+        alerts_label.clipsToBounds = true
         
         scroll_view.contentSize = CGSize(width: screen_width, height: screen_height + 500)
         scroll_view.translatesAutoresizingMaskIntoConstraints = false
@@ -157,6 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         scroll_view.addSubview(weather_description_label)
         scroll_view.addSubview(temp_label)
         scroll_view.addSubview(wind_label)
+        scroll_view.addSubview(alerts_label)
         scroll_view.addSubview(hourly_table_view)
         scroll_view.addSubview(daily_table_view)
         

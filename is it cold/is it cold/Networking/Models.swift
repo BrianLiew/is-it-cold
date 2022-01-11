@@ -49,6 +49,7 @@ struct weather_data: Codable {
     var current: current
     var hourly: [Hourly]
     var daily: [Daily]
+    var alerts: [Alerts]
     
     // for debug use only
     mutating func set_description(description: String) -> Void { current.weather[0].description = description }
@@ -71,6 +72,12 @@ struct Daily: Codable {
     var dt: Int
     var temp: temp
     var weather: [Weather]
+}
+
+struct Alerts: Codable {
+    var sender_name: String
+    var event: String
+    var description: String
 }
 
 struct temp: Codable {
