@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         /*
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.is-it-cold.fetch", using: nil) { (task) in
             self.handle_background_refresh(task: task as! BGAppRefreshTask)
@@ -65,8 +66,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
-extension Notification.Name {
-    static let new_data_fetched = Notification.Name("com.is-it-cold.fetch")
-}
-

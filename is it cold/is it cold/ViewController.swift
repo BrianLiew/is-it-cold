@@ -14,11 +14,6 @@ import AddressBookUI
 let screen_width = UIScreen.main.bounds.width
 let screen_height = UIScreen.main.bounds.height
 
-let title_font = UIFont(name: "Chalkduster", size: 32)
-let regular_font = UIFont(name: "Chalkduster", size: 24)
-let cell_font = UIFont(name: "Chalkduster", size: 16)
-let secondary_cell_font = UIFont(name: "Chalkduster", size: 12)
-
 let white = UIColor(red: 1, green: 1, blue: 0.92, alpha: 1)
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
@@ -99,13 +94,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         init_location_manager()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        init_UI()
         
+        init_UI()
         // init_location_manager()
         // let network_instance = Networking(latitude: 40.76, longitude: -73.78)
         // network_instance.make_request(completion_handler: request_completion_handler)
@@ -252,14 +248,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for index in 0...23 { self.hourly_data[index] = data.hourly[index] }
         for index in 0...6 { self.daily_data[index] = data.daily[index] }
     }
-    
-    /*
-    // caching each cell's individual images
-    func cache_images(data: weather_data) -> Void {
-        for index in 0...23 { hourly_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.hourly[index].weather[0].icon)@2x.png")!))! }
-        for index in 0...6 { daily_images[index] = UIImage(data: try! Data(contentsOf: URL(string: "http://openweathermap.org/img/wn/\(data.daily[index].weather[0].icon)@2x.png")!))! }
-    }
-     */
     
     func cache_images(data: weather_data) -> Void {
         for index in 0...23 {
