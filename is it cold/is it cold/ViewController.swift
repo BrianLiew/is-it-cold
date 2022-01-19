@@ -97,9 +97,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         init_location_manager()
     }
+    
+    let test = locationManager1()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        test.init_manager()
+        test.request_location(completion_handler: test.location_completion_handler)
         
         init_UI()
         // init_location_manager()
@@ -303,9 +308,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
                 if let weather_data_unwrapped = weather_data {
-                    // weather_data_unwrapped.set_description(description: "snow") // animation debugging purposes only
+                    // weather_data_unwrapped.set_description(description: "snow") // animation debug
                     self.update_data(data: weather_data_unwrapped)
                     self.cache_images(data: weather_data_unwrapped) // fix: long loading times
+                    // print(weather_data_unwrapped.current.weather[0].description.capitalized) // animation debug
                     self.update_UI(
                         city_name: self.city,
                         country_name: self.country,
