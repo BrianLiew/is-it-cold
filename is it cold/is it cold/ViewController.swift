@@ -206,7 +206,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let view = self.view as! SKView? {
             
             switch (description) {
-            case "Clear Sky":
+            case "Clear":
                 clear_sky(view: background_view)
             case "Few Clouds":
                 convert_text_to_white()
