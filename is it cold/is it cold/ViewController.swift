@@ -190,7 +190,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let view = self.view as! SKView? {
             
             switch (description) {
-            case "Clear Sky":
+            case "Clear":
                 clear_sky(view: background_view)
             case "Few Clouds":
                 convert_text_to_white()
@@ -303,7 +303,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
                 if let weather_data_unwrapped = weather_data {
-                    // weather_data_unwrapped.set_description(description: "snow") // animation debugging purposes only
+                    // weather_data_unwrapped.set_description(description: "snow") // animation debug
+                    print(weather_data_unwrapped.current.weather[0].main.capitalized) // animation debug
                     self.update_data(data: weather_data_unwrapped)
                     self.cache_images(data: weather_data_unwrapped) // fix: long loading times
                     self.update_UI(
