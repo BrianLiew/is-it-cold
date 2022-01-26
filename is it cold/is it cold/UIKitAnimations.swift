@@ -10,7 +10,29 @@ import UIKit
 
 private let pi: Double = 3.1415
 
-func clear_sky(view: UIView) -> Void {
+/*
+func play_uikit_animation(view: UIView, time: Time, weather: String) -> Void {
+    switch (weather) {
+    case "Clear":
+        
+    default:
+        print("no animation found")
+    }
+}
+
+func play_clear_sky(view: UIView, time: Time) {
+    switch (time.current) {
+    case ...time.moonset:
+        night_clear_sky(view: view)
+    case time.moonset
+    case time.sunrise...time.sunset:
+        day_clear_sky(view: view)
+    case time.sun
+    }
+}
+ */
+
+func day_clear_sky(view: UIView) -> Void {
     // graphics
     let background = CAGradientLayer()
     background.frame = view.bounds
@@ -28,9 +50,9 @@ func clear_sky(view: UIView) -> Void {
     layer.path = path.cgPath
     layer_2.path = path_2.cgPath
     
-    layer.position = CGPoint(x: 200, y: -screen_height / 3)
+    layer.position = CGPoint(x: 200, y: -screen_height / 4)
     layer.fillColor = UIColor(red: 1, green: 0.96, blue: 0.65, alpha: 1).cgColor
-    layer_2.position = CGPoint(x: 200, y: -screen_height / 3)
+    layer_2.position = CGPoint(x: 200, y: -screen_height / 4)
     layer_2.fillColor = UIColor(red: 1, green: 0.96, blue: 0.65, alpha: 0.15).cgColor
     
     // animation

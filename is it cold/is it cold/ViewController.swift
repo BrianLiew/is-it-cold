@@ -14,8 +14,6 @@ import AddressBookUI
 let screen_width = UIScreen.main.bounds.width
 let screen_height = UIScreen.main.bounds.height
 
-let white = UIColor(red: 1, green: 1, blue: 0.92, alpha: 1)
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
         
     // MARK: - UIView element declarations
@@ -41,7 +39,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var country: String = ""
     // MARK: Array
     var hourly_data: [Hourly] = Array(repeating: Hourly(dt: 0, temp: 0, wind_speed: 0, wind_deg: 0, weather: [Weather(main: "", description: "", icon: "")]), count: 24)
-    var daily_data: [Daily] = Array(repeating: Daily(dt: 0, temp: temp(min: 0, max: 0), weather: [Weather(main: "", description: "", icon: "")]), count: 7)
+    var daily_data: [Daily] = Array(repeating: Daily(dt: 0, sunrise: 0, sunset: 0, moonrise: 0, moonset: 0, temp: temp(min: 0, max: 0), weather: [Weather(main: "", description: "", icon: "")]), count: 7)
     var hourly_images: [UIImage] = Array(repeating: UIImage(), count: 24)
     var daily_images: [UIImage] = Array(repeating: UIImage(), count: 7)
     // MARK: Dictionary
@@ -95,16 +93,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        init_location_manager()
+        // init_location_manager()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         init_UI()
-        // init_location_manager()
-        // let network_instance = Networking(latitude: 40.76, longitude: -73.78)
-        // network_instance.make_request(completion_handler: request_completion_handler)
+        init_location_manager()
+        
+        // Networking.set_location(latitude: 40.76, longitude: -73.78)
+        // Networking.make_request(completion_handler: parse_json)
     }
     
     func init_location_manager() {
@@ -162,8 +161,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
     }
     
-    // updates data-displaying elements and background animations. Called in request_completion_handler. ONE CALL only.
+    // updates data-displaying elements and background animations. Called in parse_json. ONE CALL only.
     func update_UI(
+        // time: Time,
         city_name: String,
         country_name: String,
         weather_description_string: String,
@@ -182,16 +182,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         
         hourly_table_view.reloadData()
         daily_table_view.reloadData()
-
+        
         init_animation(description: weather_group, background_view: background_view)
+
+        // init_animation(time: time, description: weather_group, background_view: background_view)
     }
     
+    // removed param = time: Time
     func init_animation(description: String, background_view: UIView) -> Void {
         if let view = self.view as! SKView? {
             
             switch (description) {
             case "Clear":
-                clear_sky(view: background_view)
+                // play_uikit_animation(view: background_view, time: time, weather: "Clear")
+                day_clear_sky(view: background_view)
             case "Few Clouds":
                 convert_text_to_white()
                 few_clouds(view: background_view)
@@ -298,15 +302,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - data fetching functions
 
     // completion handler for make_request() for ONE CALL. Parses data.
-    func request_completion_handler(json: Data?) -> Void {
+    func parse_json(json: Data?) -> Void {
         if let json_unwrapped = json {
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
-                if let weather_data_unwrapped = weather_data {
+                if var weather_data_unwrapped = weather_data {
                     // weather_data_unwrapped.set_description(description: "snow") // animation debug
-                    print(weather_data_unwrapped.current.weather[0].main.capitalized) // animation debug
+                    // print(weather_data_unwrapped.current.weather[0].main.capitalized) // animation debug
                     self.update_data(data: weather_data_unwrapped)
-                    self.cache_images(data: weather_data_unwrapped) // fix: long loading times
+                    self.cache_images(data: weather_data_unwrapped) // MARK: fix: long loading times
                     self.update_UI(
                         city_name: self.city,
                         country_name: self.country,
@@ -376,7 +380,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             // initiate API call
             Networking.set_location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            Networking.make_request(completion_handler: request_completion_handler)
+            Networking.make_request(completion_handler: parse_json)
         }
     }
     
