@@ -31,6 +31,8 @@
 		F180EC9327976EAB00D9FDBA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC9227976EAB00D9FDBA /* Fonts.swift */; };
 		F180EC972797DB2200D9FDBA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC962797DB2200D9FDBA /* Colors.swift */; };
 		F180EC9B2797DED400D9FDBA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC9A2797DED400D9FDBA /* Time.swift */; };
+		F19FE2DA27FFB670003DF3FF /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FE2D927FFB670003DF3FF /* AppErrors.swift */; };
+		F19FE2E127FFD8EF003DF3FF /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FE2E027FFD8EF003DF3FF /* Container.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		F180EC9227976EAB00D9FDBA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		F180EC962797DB2200D9FDBA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F180EC9A2797DED400D9FDBA /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		F19FE2D927FFB670003DF3FF /* AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
+		F19FE2E027FFD8EF003DF3FF /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +82,6 @@
 			children = (
 				F167A53027810EED000DC845 /* Models.swift */,
 				F167A52C27810EDC000DC845 /* Networking.swift */,
-				F167A53227810EF3000DC845 /* Units.swift */,
 				F167A52E27810EEA000DC845 /* URL and Key.swift */,
 			);
 			path = Networking;
@@ -103,30 +106,57 @@
 		F167A51427810B33000DC845 /* is it cold */ = {
 			isa = PBXGroup;
 			children = (
-				F167A51927810B33000DC845 /* Actions.sks */,
+				F19FE2D827FFB63C003DF3FF /* Scenes */,
 				F167A51527810B33000DC845 /* AppDelegate.swift */,
 				F167A52227810B34000DC845 /* Assets.xcassets */,
 				F167A5362781118E000DC845 /* is-it-cold-Info.plist */,
 				F167A52427810B34000DC845 /* LaunchScreen.storyboard */,
 				F167A51F27810B33000DC845 /* Main.storyboard */,
 				F13BFBB927844A26004D6C72 /* Networking */,
+				F19FE2DD27FFC45B003DF3FF /* Animations */,
+				F167A51D27810B33000DC845 /* ViewController.swift */,
+				F19FE2E027FFD8EF003DF3FF /* Container.swift */,
+				F19FE2DC27FFC42F003DF3FF /* Miscellaneous */,
+			);
+			path = "is it cold";
+			sourceTree = "<group>";
+		};
+		F19FE2D827FFB63C003DF3FF /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				F167A51927810B33000DC845 /* Actions.sks */,
 				F167A51727810B33000DC845 /* Rain.sks */,
-				F167A51B27810B33000DC845 /* Rain.swift */,
-				F13BFBC22784CDBE004D6C72 /* ShowerRain.swift */,
 				F13BFBC42784CDC5004D6C72 /* ShowerRain.sks */,
 				F13BFBB7278442C6004D6C72 /* Snow.sks */,
-				F13BFBB52784429E004D6C72 /* Snow.swift */,
-				F167A53427810F6B000DC845 /* UIKitAnimations.swift */,
-				F167A51D27810B33000DC845 /* ViewController.swift */,
-				F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */,
-				F180EC9A2797DED400D9FDBA /* Time.swift */,
-				F180EC9227976EAB00D9FDBA /* Fonts.swift */,
-				F13BFBBC2784CCA2004D6C72 /* Mist.swift */,
-				F180EC962797DB2200D9FDBA /* Colors.swift */,
 				F13BFBBE2784CCAF004D6C72 /* Thunderstorm.sks */,
 				F13BFBC02784CCBE004D6C72 /* Mist.sks */,
 			);
-			path = "is it cold";
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		F19FE2DC27FFC42F003DF3FF /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				F19FE2D927FFB670003DF3FF /* AppErrors.swift */,
+				F180EC9A2797DED400D9FDBA /* Time.swift */,
+				F180EC9227976EAB00D9FDBA /* Fonts.swift */,
+				F180EC962797DB2200D9FDBA /* Colors.swift */,
+				F167A53227810EF3000DC845 /* Units.swift */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		F19FE2DD27FFC45B003DF3FF /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				F167A51B27810B33000DC845 /* Rain.swift */,
+				F13BFBC22784CDBE004D6C72 /* ShowerRain.swift */,
+				F13BFBB52784429E004D6C72 /* Snow.swift */,
+				F167A53427810F6B000DC845 /* UIKitAnimations.swift */,
+				F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */,
+				F13BFBBC2784CCA2004D6C72 /* Mist.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +244,7 @@
 				F167A51C27810B33000DC845 /* Rain.swift in Sources */,
 				F167A51E27810B33000DC845 /* ViewController.swift in Sources */,
 				F13BFBC32784CDBE004D6C72 /* ShowerRain.swift in Sources */,
+				F19FE2DA27FFB670003DF3FF /* AppErrors.swift in Sources */,
 				F13BFBB62784429E004D6C72 /* Snow.swift in Sources */,
 				F167A53327810EF3000DC845 /* Units.swift in Sources */,
 				F167A53127810EED000DC845 /* Models.swift in Sources */,
@@ -221,6 +252,7 @@
 				F180EC9B2797DED400D9FDBA /* Time.swift in Sources */,
 				F13BFBBB2784CC94004D6C72 /* Thunderstorm.swift in Sources */,
 				F167A52D27810EDC000DC845 /* Networking.swift in Sources */,
+				F19FE2E127FFD8EF003DF3FF /* Container.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

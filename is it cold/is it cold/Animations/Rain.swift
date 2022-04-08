@@ -1,21 +1,21 @@
 //
-//  ShowerRain.swift
+//  GameScene.swift
 //  is it cold
 //
-//  Created by Brian Liew on 1/4/22.
+//  Created by Brian Liew on 1/1/22.
 //
 
-import Foundation
 import SpriteKit
+import GameplayKit
 
-class ShowerRain: SKScene {
+class Rain: SKScene {
     
     override func didMove(to view: SKView) {
         run(SKAction.sequence([
             // background
             SKAction.colorize(with: SKColor(displayP3Red: 0, green: 0.25, blue: 0.5, alpha: 0.25), colorBlendFactor: 1.0, duration: 1.0),
             SKAction.wait(forDuration: 0.25),
-            // rain animation
+            // animation
             SKAction.repeat(SKAction.sequence([
                 SKAction.run(rain),
                 SKAction.wait(forDuration: 0.5)
@@ -30,7 +30,7 @@ class ShowerRain: SKScene {
             ]), count: 5),
             SKAction.repeatForever(SKAction.sequence([
                 SKAction.run(rain),
-                SKAction.wait(forDuration: 0.05)
+                SKAction.wait(forDuration: 0.025)
             ]))
         ]))
     }
@@ -48,4 +48,5 @@ class ShowerRain: SKScene {
     }
     
     func random(from: Double, to: Double) -> Double { return Double.random(in: (from...to))}
+    
 }

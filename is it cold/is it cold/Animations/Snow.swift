@@ -25,14 +25,14 @@ class Snow: SKScene {
                     SKAction.wait(forDuration: 0.01)
                 ]),
                 SKAction.group([
-                    SKAction.run(small_snow),
+                    SKAction.run(smallSnow),
                     SKAction.wait(forDuration: 0.005)
                 ])
             ]))
         ]))
     }
     
-    func small_snow() -> Void {
+    func smallSnow() -> Void {
         let snow_node = SKSpriteNode(imageNamed: "snowflake")
         snow_node.size = CGSize(width: 30, height: 30)
         snow_node.alpha = 0.3

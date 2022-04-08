@@ -10,39 +10,37 @@ import SpriteKit
 import GameplayKit
 import CoreLocation
 import AddressBookUI
+import Foundation
 
 let screen_width = UIScreen.main.bounds.width
 let screen_height = UIScreen.main.bounds.height
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
         
-    // MARK: - UIView element declarations
+    // MARK: - UIKit
     
-    // MARK: UIScrollView
+    // UIScrollView
     let scroll_view = UIScrollView(frame: CGRect(x: 0, y: 0, width: screen_width, height: screen_height))
-    // let forecast_scrollview = UIScrollView(frame: CGRect(x: 0, y: screen_height / 2, width: screen_width, height: 350))
-    // MARK: UIStackView
-    // let forecast_stackview = UIStackView(frame: CGRect(x: 0, y: screen_height, width: screen_width, height: 350))
-    // MARK: UILabel
+    // UIView
     let background = UIView(frame: CGRect(x: 0, y: -300, width: screen_width, height: screen_height * 3))
-    let city_label = UILabel(frame: CGRect(x: 25, y: 0, width: screen_width - 50, height: 100))
-    let weather_description_label = UILabel(frame: CGRect(x: 25, y: 100, width: screen_width - 50, height: 100))
-    let temp_label = UILabel(frame: CGRect(x: 25, y: 200, width: screen_width / 3 - 25, height: 100))
-    let wind_label = UILabel(frame: CGRect(x: screen_width / 3, y: 200, width: screen_width * 2 / 3 - 25, height: 100))
-    // MARK: UITableView
+    // UILabel
+    let time_label = UILabel(frame: CGRect(x: 25, y: 0, width: screen_width - 50, height: 100))
+    let city_label = UILabel(frame: CGRect(x: 25, y: 100, width: screen_width - 50, height: 100))
+    let weather_description_label = UILabel(frame: CGRect(x: 25, y: 200, width: screen_width - 50, height: 100))
+    let temp_label = UILabel(frame: CGRect(x: 25, y: 300, width: screen_width / 3 - 25, height: 100))
+    let wind_label = UILabel(frame: CGRect(x: screen_width / 3, y: 300, width: screen_width * 2 / 3 - 25, height: 100))
+    // UITableView
     let hourly_table_view = UITableView(frame: CGRect(x: 25, y: 400, width: screen_width - 50, height: 300))
     let daily_table_view = UITableView(frame: CGRect(x: 25, y: 750, width: screen_width - 50, height: 300))
     
-    // MARK: - data structure declarations
-    // MARK: Variables
     var city: String = ""
     var country: String = ""
-    // MARK: Array
     var hourly_data: [Hourly] = Array(repeating: Hourly(dt: 0, temp: 0, wind_speed: 0, wind_deg: 0, weather: [Weather(main: "", description: "", icon: "")]), count: 24)
     var daily_data: [Daily] = Array(repeating: Daily(dt: 0, sunrise: 0, sunset: 0, moonrise: 0, moonset: 0, temp: temp(min: 0, max: 0), weather: [Weather(main: "", description: "", icon: "")]), count: 7)
     var hourly_images: [UIImage] = Array(repeating: UIImage(), count: 24)
     var daily_images: [UIImage] = Array(repeating: UIImage(), count: 7)
-    // MARK: Dictionary
+    var timer = Timer()
+
     var icons: [String: UIImage] = [
         "01d": UIImage(),
         "02d": UIImage(),
@@ -83,51 +81,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         "13n": false,
         "50n": false
     ]
-    // MARK: Decodable
+
     let decoder = JSONDecoder()
-    // MARK: CLLocation
     let location_manager = CLLocationManager()
     
     // MARK: - ViewController
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // init_location_manager()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        init_UI()
-        init_location_manager()
-        
-        // Networking.set_location(latitude: 40.76, longitude: -73.78)
-        // Networking.make_request(completion_handler: parse_json)
+
+        initUI()
+        fetchLocation()
     }
     
-    func init_location_manager() {
+    func fetchLocation() {
         location_manager.delegate = self
         location_manager.desiredAccuracy = kCLLocationAccuracyBest
-        location_manager.requestLocation()
+        location_manager.distanceFilter = 500
+        DispatchQueue.main.async {
+            self.location_manager.startUpdatingLocation()
+        }
     }
     
-    // initiation of data-displaying elements. Called in viewDidLoad.
-    func init_UI() -> Void {
+    func initUI() -> Void {
+        time_label.text = "00:00:00 --"
         city_label.text = "-"
         weather_description_label.text = "-"
         temp_label.text = "00.0 °F"
         wind_label.text = "00.0mph 000°N"
 
+        time_label.textAlignment = .center
         city_label.textAlignment = .center
         weather_description_label.textAlignment = .center
         temp_label.textAlignment = .center
         wind_label.textAlignment = .center
         
-        city_label.font = regular_font
+        time_label.font = header_font
+        city_label.font = header_font
         weather_description_label.font = title_font
-        temp_label.font = regular_font
-        wind_label.font = regular_font
+        temp_label.font = body_font
+        wind_label.font = body_font
         
         scroll_view.contentSize = CGSize(width: screen_width, height: screen_height + 500)
         scroll_view.translatesAutoresizingMaskIntoConstraints = false
@@ -148,6 +141,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(scroll_view)
         view.sendSubviewToBack(scroll_view)
         scroll_view.addSubview(background)
+        scroll_view.addSubview(time_label)
         scroll_view.addSubview(city_label)
         scroll_view.addSubview(weather_description_label)
         scroll_view.addSubview(temp_label)
@@ -161,9 +155,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.view.backgroundColor = UIColor(red: 0, green: 0.25, blue: 0.5, alpha: 1.0)
     }
     
-    // updates data-displaying elements and background animations. Called in parse_json. ONE CALL only.
     func update_UI(
-        // time: Time,
         city_name: String,
         country_name: String,
         weather_description_string: String,
@@ -174,27 +166,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         hourly_stats: [Hourly],
         background_view: UIView
     ) -> Void {
-        // update current weather data
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in self.updateTime()})
+
+        self.time_label.text = getCurrentTime()
         self.city_label.text = city_name + ", " + country_name
         self.weather_description_label.text = weather_description_string
         self.temp_label.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: temperature)) + "°F"
         self.wind_label.text = String(format: "%.1f", wind_speed) + "mph " + convert_deg_to_direction(input: wind_deg)
-                        
+        
         hourly_table_view.reloadData()
         daily_table_view.reloadData()
         
-        init_animation(description: weather_group, background_view: background_view)
-
-        // init_animation(time: time, description: weather_group, background_view: background_view)
+        do { try initAnimation(description: weather_group, background_view: background_view) }
+        catch { print("yeet") }
     }
+        
+    func updateTime() { self.time_label.text = getCurrentTime() }
     
-    // removed param = time: Time
-    func init_animation(description: String, background_view: UIView) -> Void {
+    func initAnimation(description: String, background_view: UIView) throws -> Void {
         if let view = self.view as! SKView? {
-            
+                        
             switch (description) {
             case "Clear":
-                // play_uikit_animation(view: background_view, time: time, weather: "Clear")
                 day_clear_sky(view: background_view)
             case "Few Clouds":
                 convert_text_to_white()
@@ -237,7 +230,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     convert_text_to_white()
                     view.presentScene(scene)
                 }
-            default: print("default")
+            default:
+                throw AppErrors(description: "initAnimation matches no animation case", kind: .AnimationError)
             }
             
             // view.ignoresSiblingOrder = true
@@ -269,30 +263,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             daily_images[index] = icons[String(data.daily[index].weather[0].icon)]!
         }
     }
-    
-    func time_formatter(current_time: Double) -> String {
-        let time = Date(timeIntervalSince1970: current_time)
 
-        let format = DateFormatter()
-        format.timeZone = .current
-        format.dateFormat = "hh:mm a"
-        let time_string = format.string(from: time)
-        
-        return time_string
-    }
-    
-    func date_formatter(current_time: Double) -> String {
-        let date = Date(timeIntervalSince1970: current_time)
-
-        let format = DateFormatter()
-        format.timeZone = .current
-        format.dateFormat = "E MMM DD"
-        let date_string = format.string(from: date)
-        
-        return date_string
-    }
         
     func convert_text_to_white() -> Void {
+        time_label.textColor = white
         city_label.textColor = white
         weather_description_label.textColor = white
         temp_label.textColor = white
@@ -306,7 +280,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let json_unwrapped = json {
             DispatchQueue.main.async {
                 let weather_data = try? self.decoder.decode(weather_data.self, from: json_unwrapped)
-                if var weather_data_unwrapped = weather_data {
+                if let weather_data_unwrapped = weather_data {
+                    // print(weather_data_unwrapped)
                     // weather_data_unwrapped.set_description(description: "snow") // animation debug
                     // print(weather_data_unwrapped.current.weather[0].main.capitalized) // animation debug
                     self.update_data(data: weather_data_unwrapped)
@@ -339,26 +314,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath)
-
+        
         if (tableView == self.hourly_table_view) {
             var content = cell.defaultContentConfiguration()
             
-            content.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: hourly_data[indexPath.row].temp)) + "°F"
-            content.secondaryText = "\(time_formatter(current_time: Double(hourly_data[indexPath.row].dt)))"
-            content.textProperties.font = cell_font!
-            content.secondaryTextProperties.font = secondary_cell_font!
             content.image = hourly_images[indexPath.row]
             content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
-            
+            content.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: hourly_data[indexPath.row].temp)) + "°F"
+            content.secondaryText = "\(timeFormatter(current_time: Double(hourly_data[indexPath.row].dt)))"
+            content.textProperties.font = cell_font
+            content.secondaryTextProperties.font = secondary_cell_font
+
             cell.contentConfiguration = content
         }
         else if (tableView == self.daily_table_view) {
             var content = cell.defaultContentConfiguration()
             
             content.text = String(format: "%.1f", convert_kelvin_to_fahrenheit(input: daily_data[indexPath.row].temp.min)) +  "°F ~ " + String(format: "%.1f", convert_kelvin_to_fahrenheit(input: daily_data[indexPath.row].temp.max)) + "°F"
-            content.secondaryText = "\(date_formatter(current_time: Double(daily_data[indexPath.row].dt)))"
-            content.textProperties.font = cell_font!
-            content.secondaryTextProperties.font = secondary_cell_font!
+            content.secondaryText = "\(dateFormatter(current_time: Double(daily_data[indexPath.row].dt)))"
+            content.textProperties.font = cell_font
+            content.secondaryTextProperties.font = secondary_cell_font
             content.image = daily_images[indexPath.row]
             content.imageProperties.maximumSize = CGSize(width: 50, height: 50)
             
@@ -368,16 +343,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    // MARK: - CLLocationManagerDelegate
+    // MARK: - CoreLocation
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            // update location label
             location.fetchCityAndCountry { city, country, error in
-                guard let city = city, let country = country, error == nil else { return }
+                guard let city = city, let country = country, error == nil else {
+                    guard let error_unwrapped = error else { fatalError("Unresolved error failed to unwrap error into error_unwrapped") }
+                    let nserror = error_unwrapped as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)") }
+
                 self.city = city
                 self.country = country
             }
+            
             // initiate API call
             Networking.set_location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             Networking.make_request(completion_handler: parse_json)
@@ -385,28 +364,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to fetch location")
-    }
+        let nserror = error as NSError
+        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")    }
     
-    // MARK: - SpriteKit default functions
+    // MARK: - SpriteKit
 
-    override var shouldAutorotate: Bool {
-        return false
-    }
+    override var shouldAutorotate: Bool { return false }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { if UIDevice.current.userInterfaceIdiom == .phone { return .allButUpsideDown } else { return .all } }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+    override var prefersStatusBarHidden: Bool { return true }
     
 }
+
+    // MARK: - Extensions
 
 extension CLLocation {
     

@@ -9,6 +9,7 @@ import Foundation
 
 private let key: String = "865e25bdadd4ab58522a489eed0685de"
 
+// debug parameters
 private let city: String = "Binghamton"
 private let lat: Double = 33.44
 private let lon: Double = -94.04

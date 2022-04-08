@@ -15,7 +15,7 @@ class Thunderstorm: SKScene {
             // background
             SKAction.colorize(with: SKColor(displayP3Red: 0, green: 0.25, blue: 0.5, alpha: 0.25), colorBlendFactor: 1.0, duration: 1.0),
             SKAction.wait(forDuration: 0.25),
-            // rain animation
+            // animation
             SKAction.repeat(SKAction.sequence([
                 SKAction.run(rain),
                 SKAction.wait(forDuration: 0.5)
@@ -32,7 +32,7 @@ class Thunderstorm: SKScene {
                 SKAction.repeat(SKAction.sequence([
                     SKAction.run(rain),
                     SKAction.wait(forDuration: 0.125)
-                ]), count: 10),
+                ]), count: 1),
                 SKAction.run(lightning_flash)
             ]))
         ]))
