@@ -1,10 +1,3 @@
-//
-//  Thunderstorm.swift
-//  is it cold
-//
-//  Created by Brian Liew on 1/4/22.
-//
-
 import Foundation
 import SpriteKit
 
@@ -17,30 +10,30 @@ class Thunderstorm: SKScene {
             SKAction.wait(forDuration: 0.25),
             // animation
             SKAction.repeat(SKAction.sequence([
-                SKAction.run(rain),
+                SKAction.run(playRain),
                 SKAction.wait(forDuration: 0.5)
             ]), count: 3),
             SKAction.repeat(SKAction.sequence([
-                SKAction.run(rain),
+                SKAction.run(playRain),
                 SKAction.wait(forDuration: 0.25)
             ]), count: 5),
             SKAction.repeat(SKAction.sequence([
-                SKAction.run(rain),
+                SKAction.run(playRain),
                 SKAction.wait(forDuration: 0.125)
             ]), count: 5),
             SKAction.repeatForever(SKAction.sequence([
                 SKAction.repeat(SKAction.sequence([
-                    SKAction.run(rain),
+                    SKAction.run(playRain),
                     SKAction.wait(forDuration: 0.125)
                 ]), count: 1),
-                SKAction.run(lightning_flash)
+                SKAction.run(playLightningFlash)
             ]))
         ]))
     }
     
-    func rain() -> Void {
+    func playRain() -> Void {
         let rain_node = SKSpriteNode(color: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1), size: CGSize(width: 3, height: 50))
-        rain_node.position = CGPoint(x: random(from: -screen_width, to: screen_width), y: screen_height)
+        rain_node.position = CGPoint(x: Units.random(from: -screen_width, to: screen_width), y: screen_height)
         
         addChild(rain_node)
         
@@ -50,7 +43,7 @@ class Thunderstorm: SKScene {
         rain_node.run(SKAction.sequence([movement, removal]))
     }
     
-    func lightning_flash() -> Void {
+    func playLightningFlash() -> Void {
         let flash_node = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 1), size: CGSize(width: 100, height: 100))
         flash_node.position = CGPoint(x: 0, y: 0)
         
@@ -62,7 +55,5 @@ class Thunderstorm: SKScene {
                 
         flash_node.run(SKAction.sequence([fadein, fadeout, removal]))
     }
-    
-    func random(from: Double, to: Double) -> Double { return Double.random(in: (from...to))}
     
 }

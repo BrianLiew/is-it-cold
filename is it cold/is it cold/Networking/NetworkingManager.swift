@@ -1,14 +1,7 @@
-//
-//  Networking.swift
-//  is it cold
-//
-//  Created by Brian Liew on 1/1/22.
-//
-
 import Foundation
 import CoreLocation
 
-class Networking {
+class NetworkingManager {
     
     private static let key: String = "865e25bdadd4ab58522a489eed0685de"
     private static var url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=\(longitude)&exclude=minutely,alerts&appid=\(key)")!
@@ -18,12 +11,10 @@ class Networking {
     
     static let session = URLSession(configuration: URLSessionConfiguration.default)
     
-    static func set_location(latitude: Double, longitude: Double) {
+    static func makeRequest(latitude: Double, longitude: Double, completion_handler: @escaping (Data?) -> Void) {
         self.latitude = latitude
         self.longitude = longitude
-    }
-    
-    static func make_request(completion_handler: @escaping (Data?) -> Void) {
+                
         DispatchQueue.global().async {
             let task = session.dataTask(with: self.url) { data, response, error in
                 guard let http_response = response as? HTTPURLResponse,
