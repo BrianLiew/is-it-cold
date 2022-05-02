@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F139D453281F3FC000D7A649 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139D452281F3FC000D7A649 /* LocationManager.swift */; };
+		F139D455281F4D8B00D7A649 /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139D454281F4D8B00D7A649 /* AnimationManager.swift */; };
+		F139D457281F4E8E00D7A649 /* Clouds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139D456281F4E8E00D7A649 /* Clouds.swift */; };
+		F139D459281F4E9200D7A649 /* Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139D458281F4E9200D7A649 /* Clear.swift */; };
+		F139D45B281F510900D7A649 /* IconsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139D45A281F510900D7A649 /* IconsManager.swift */; };
 		F13BFBB62784429E004D6C72 /* Snow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BFBB52784429E004D6C72 /* Snow.swift */; };
 		F13BFBB8278442C6004D6C72 /* Snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = F13BFBB7278442C6004D6C72 /* Snow.sks */; };
 		F13BFBBB2784CC94004D6C72 /* Thunderstorm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */; };
@@ -23,19 +28,23 @@
 		F167A52127810B33000DC845 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F167A51F27810B33000DC845 /* Main.storyboard */; };
 		F167A52327810B34000DC845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F167A52227810B34000DC845 /* Assets.xcassets */; };
 		F167A52627810B34000DC845 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F167A52427810B34000DC845 /* LaunchScreen.storyboard */; };
-		F167A52D27810EDC000DC845 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52C27810EDC000DC845 /* Networking.swift */; };
-		F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52E27810EEA000DC845 /* URL and Key.swift */; };
+		F167A52D27810EDC000DC845 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A52C27810EDC000DC845 /* NetworkingManager.swift */; };
 		F167A53127810EED000DC845 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53027810EED000DC845 /* Models.swift */; };
 		F167A53327810EF3000DC845 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53227810EF3000DC845 /* Units.swift */; };
-		F167A53527810F6B000DC845 /* UIKitAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F167A53427810F6B000DC845 /* UIKitAnimations.swift */; };
 		F180EC9327976EAB00D9FDBA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC9227976EAB00D9FDBA /* Fonts.swift */; };
 		F180EC972797DB2200D9FDBA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC962797DB2200D9FDBA /* Colors.swift */; };
 		F180EC9B2797DED400D9FDBA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F180EC9A2797DED400D9FDBA /* Time.swift */; };
 		F19FE2DA27FFB670003DF3FF /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FE2D927FFB670003DF3FF /* AppErrors.swift */; };
-		F19FE2E127FFD8EF003DF3FF /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FE2E027FFD8EF003DF3FF /* Container.swift */; };
+		F19FE2E127FFD8EF003DF3FF /* AllData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FE2E027FFD8EF003DF3FF /* AllData.swift */; };
+		F19FE2E52800ACC5003DF3FF /* NightClear.sks in Resources */ = {isa = PBXBuildFile; fileRef = F19FE2E42800ACC5003DF3FF /* NightClear.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F139D452281F3FC000D7A649 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		F139D454281F4D8B00D7A649 /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
+		F139D456281F4E8E00D7A649 /* Clouds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clouds.swift; sourceTree = "<group>"; };
+		F139D458281F4E9200D7A649 /* Clear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clear.swift; sourceTree = "<group>"; };
+		F139D45A281F510900D7A649 /* IconsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsManager.swift; sourceTree = "<group>"; };
 		F13BFBB52784429E004D6C72 /* Snow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snow.swift; sourceTree = "<group>"; };
 		F13BFBB7278442C6004D6C72 /* Snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Snow.sks; sourceTree = "<group>"; };
 		F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thunderstorm.swift; sourceTree = "<group>"; };
@@ -53,17 +62,16 @@
 		F167A52027810B33000DC845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F167A52227810B34000DC845 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F167A52527810B34000DC845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		F167A52C27810EDC000DC845 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		F167A52E27810EEA000DC845 /* URL and Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL and Key.swift"; sourceTree = "<group>"; };
+		F167A52C27810EDC000DC845 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		F167A53027810EED000DC845 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F167A53227810EF3000DC845 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
-		F167A53427810F6B000DC845 /* UIKitAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAnimations.swift; sourceTree = "<group>"; };
 		F167A5362781118E000DC845 /* is-it-cold-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "is-it-cold-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F180EC9227976EAB00D9FDBA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		F180EC962797DB2200D9FDBA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F180EC9A2797DED400D9FDBA /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		F19FE2D927FFB670003DF3FF /* AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
-		F19FE2E027FFD8EF003DF3FF /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		F19FE2E027FFD8EF003DF3FF /* AllData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllData.swift; sourceTree = "<group>"; };
+		F19FE2E42800ACC5003DF3FF /* NightClear.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = NightClear.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				F167A53027810EED000DC845 /* Models.swift */,
-				F167A52C27810EDC000DC845 /* Networking.swift */,
-				F167A52E27810EEA000DC845 /* URL and Key.swift */,
+				F167A52C27810EDC000DC845 /* NetworkingManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -115,7 +122,9 @@
 				F13BFBB927844A26004D6C72 /* Networking */,
 				F19FE2DD27FFC45B003DF3FF /* Animations */,
 				F167A51D27810B33000DC845 /* ViewController.swift */,
-				F19FE2E027FFD8EF003DF3FF /* Container.swift */,
+				F139D452281F3FC000D7A649 /* LocationManager.swift */,
+				F19FE2E027FFD8EF003DF3FF /* AllData.swift */,
+				F139D45A281F510900D7A649 /* IconsManager.swift */,
 				F19FE2DC27FFC42F003DF3FF /* Miscellaneous */,
 			);
 			path = "is it cold";
@@ -124,6 +133,7 @@
 		F19FE2D827FFB63C003DF3FF /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F19FE2E42800ACC5003DF3FF /* NightClear.sks */,
 				F167A51927810B33000DC845 /* Actions.sks */,
 				F167A51727810B33000DC845 /* Rain.sks */,
 				F13BFBC42784CDC5004D6C72 /* ShowerRain.sks */,
@@ -152,9 +162,11 @@
 				F167A51B27810B33000DC845 /* Rain.swift */,
 				F13BFBC22784CDBE004D6C72 /* ShowerRain.swift */,
 				F13BFBB52784429E004D6C72 /* Snow.swift */,
-				F167A53427810F6B000DC845 /* UIKitAnimations.swift */,
 				F13BFBBA2784CC94004D6C72 /* Thunderstorm.swift */,
+				F139D456281F4E8E00D7A649 /* Clouds.swift */,
+				F139D458281F4E9200D7A649 /* Clear.swift */,
 				F13BFBBC2784CCA2004D6C72 /* Mist.swift */,
+				F139D454281F4D8B00D7A649 /* AnimationManager.swift */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -219,6 +231,7 @@
 			files = (
 				F13BFBBF2784CCAF004D6C72 /* Thunderstorm.sks in Resources */,
 				F13BFBB8278442C6004D6C72 /* Snow.sks in Resources */,
+				F19FE2E52800ACC5003DF3FF /* NightClear.sks in Resources */,
 				F167A52127810B33000DC845 /* Main.storyboard in Resources */,
 				F167A51827810B33000DC845 /* Rain.sks in Resources */,
 				F13BFBC12784CCBE004D6C72 /* Mist.sks in Resources */,
@@ -237,12 +250,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F13BFBBD2784CCA2004D6C72 /* Mist.swift in Sources */,
-				F167A52F27810EEA000DC845 /* URL and Key.swift in Sources */,
 				F180EC9327976EAB00D9FDBA /* Fonts.swift in Sources */,
+				F139D459281F4E9200D7A649 /* Clear.swift in Sources */,
 				F180EC972797DB2200D9FDBA /* Colors.swift in Sources */,
-				F167A53527810F6B000DC845 /* UIKitAnimations.swift in Sources */,
+				F139D455281F4D8B00D7A649 /* AnimationManager.swift in Sources */,
 				F167A51C27810B33000DC845 /* Rain.swift in Sources */,
 				F167A51E27810B33000DC845 /* ViewController.swift in Sources */,
+				F139D45B281F510900D7A649 /* IconsManager.swift in Sources */,
 				F13BFBC32784CDBE004D6C72 /* ShowerRain.swift in Sources */,
 				F19FE2DA27FFB670003DF3FF /* AppErrors.swift in Sources */,
 				F13BFBB62784429E004D6C72 /* Snow.swift in Sources */,
@@ -251,8 +265,10 @@
 				F167A51627810B33000DC845 /* AppDelegate.swift in Sources */,
 				F180EC9B2797DED400D9FDBA /* Time.swift in Sources */,
 				F13BFBBB2784CC94004D6C72 /* Thunderstorm.swift in Sources */,
-				F167A52D27810EDC000DC845 /* Networking.swift in Sources */,
-				F19FE2E127FFD8EF003DF3FF /* Container.swift in Sources */,
+				F167A52D27810EDC000DC845 /* NetworkingManager.swift in Sources */,
+				F139D457281F4E8E00D7A649 /* Clouds.swift in Sources */,
+				F139D453281F3FC000D7A649 /* LocationManager.swift in Sources */,
+				F19FE2E127FFD8EF003DF3FF /* AllData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

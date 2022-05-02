@@ -1,13 +1,5 @@
-//
-//  Models.swift
-//  is it cold
-//
-//  Created by Brian Liew on 1/1/22.
-//
-
 import Foundation
 
-// MARK: ONE CALL WEATHER data or one_url only
 struct weather_data: Codable {
     var current: current
     var hourly: [Hourly]
