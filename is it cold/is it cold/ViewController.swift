@@ -140,9 +140,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let json_unwrapped = json {
             DispatchQueue.main.async {
                 let weather_data = try? ViewController.decoder.decode(weather_data.self, from: json_unwrapped)
-                if var weather_data_unwrapped = weather_data {
+                if let weather_data_unwrapped = weather_data {
                     // print(weather_data_unwrapped)
-                    weather_data_unwrapped.set_description(description: "snow") // animation debug
+                    // weather_data_unwrapped.set_description(description: "snow") // animation debug
                     // print(weather_data_unwrapped.current.weather[0].main.capitalized) // animation debug
                     self.updateData(data: weather_data_unwrapped)
                     IconsManager.cacheIcons(data: weather_data_unwrapped) // MARK: fix: long loading times
